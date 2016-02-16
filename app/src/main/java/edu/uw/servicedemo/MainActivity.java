@@ -11,6 +11,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "**MAIN**";
 
+    private MediaPlayer mediaPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
     public void handleStart(View v){
         Log.i(TAG, "Start pressed");
 
+        //mediaPlayer = MediaPlayer.create(this, R.raw.verdi_la_traviata_brindisi_mit);
+        Intent intent = new Intent(MainActivity.this, CountingService.class);
+        startService(intent);
+        finish();
+//        //begin service
+//        startService(intent);
+//        finish();
 
     }
 
@@ -29,7 +38,22 @@ public class MainActivity extends AppCompatActivity {
     public void handleStop(View v){
         Log.i(TAG, "Stop pressed");
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.verdi_la_traviata_brindisi_mit);
+        Intent intent = new Intent(MainActivity.this, CountingService.class);
+        stopService(intent);
+//        if(mediaPlayer != null) {
+//            mediaPlayer.stop();
+//            mediaPlayer.release();
+//            mediaPlayer = null;
+//        }
+    }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        Intent intent = new Intent(MainActivity.this, MusicService.class);
+        //bindService(intent);
     }
 }
 
